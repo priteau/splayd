@@ -1,6 +1,6 @@
 Please, check INSTALL for common informations.
 
-Many thanks to Etienne Riviere for this detailled manual :)
+Many thanks to Etienne Riviere for this detailed manual :)
 
 
 ==============================================================================
@@ -138,7 +138,7 @@ C. Some other have to be compiled and installed manually:
 	Build it and install:
 	 make macosx ; sudo make install
 
-D. (Optionnal) Install syntax highlighting for you favorite text editor
+D. (Optional) Install syntax highlighting for you favorite text editor
 
   You may want to install Lua text coloring (and language-specific functions):
 
@@ -197,7 +197,7 @@ strictly higher version numbers, and contain the file Makefile.macosx
 	  this splayd (if required)
 	- remove the lines at the end to finish the setup.
 	
-  Try the splay daemon (it will obviouslly fail to connect to a controller 
+  Try the splay daemon (it will obviously fail to connect to a controller 
   but should display the following:)
 	>> NAME: testname
 	>> KEY: local
