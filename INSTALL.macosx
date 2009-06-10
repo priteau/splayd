@@ -29,14 +29,12 @@ Many thanks to Etienne Riviere for this detailed manual :)
   though.
 - it was also tested using Mac OS 10.5 only. It should probably work under 
   10.4.
-- this tutorial assumes the usage of the FINK package system. Similar packages
-  are most probably found using DarwinPorts. If you have experience with 
-  DarwinPorts and would like to contribute to this tutorial, please contact 
-  the author.
+- this tutorial assumes the usage of the FINK or MacPorts package systems.
 - this tutorial assumes that you do not change the default paths of Fink,
-  Ruby, and others.
+  MacPorts, Ruby, and others.
 
 History:
+- Pierre Riteau, June 2009. Update to cover installation with MacPorts.
 - Etienne Riviere, March 2009. First version.
 
 ==============================================================================
@@ -49,12 +47,17 @@ A. Install Apple developer tools
   some of the applications.
   Get it from: http://developer.apple.com
 
-B. Install Fink
+B. Install Fink or MacPorts
 
   Go to http://www.finkproject.org/
   Download the latest version of fink and install it.
 
-C. Allow the usage of the 'unstable' branch of Fink
+or
+
+  Go to http://www.macports.org/
+  Download the latest version of MacPorts and install it.
+
+C. Allow the usage of the 'unstable' branch of Fink (not needed with MacPorts)
 
 Configure fink (In a terminal):
   fink configure
@@ -62,9 +65,14 @@ Configure fink (In a terminal):
   -> accept all choices per default but say "Y" when it asks about 'unstable'
      packages.
 
-Update it:
+D. Update your package system
+
+With Fink:
   fink selfupdate ; fink update-all 
   // this may take a while!
+
+With MacPorts:
+  sudo port selfupdate
 	
 ==============================================================================
                        PART 2 -- INSTALLING LUA SUPPORT
@@ -75,6 +83,10 @@ A. Some packages are available using Fink:
   fink install \
 	lua51 lua51-dev lua51-shlibs \
 	openssl097 openssl097-dev openssl097-shlibs
+
+or using MacPorts:
+
+  sudo port install lua openssl97
 	
 B. Set up the LUA PATH
 
@@ -98,6 +110,11 @@ B. Set up the LUA PATH
    LUA_PATH="/Users/you/local/lualibs/lib/?.lua;/sw/share/lua/5.1/?.lua"
    LUA_CPATH="/Users/you/local/lualibs/clib/?.so;/sw/lib/lua/5.1/?.so"
    export LUA_PATH LUA_CPATH
+
+or if you use MacPorts:
+   LUA_PATH="/Users/you/local/lualibs/lib/?.lua;/opt/local/share/lua/5.1/?.lua"
+   LUA_CPATH="/Users/you/local/lualibs/clib/?.so;/opt/local/lib/lua/5.1/?.so"
+   export LUA_PATH LUA_CPATH
 	
 C. Some other have to be compiled and installed manually:
 
@@ -111,9 +128,18 @@ C. Some other have to be compiled and installed manually:
      cd luasocket-2.0.2/
 
     Edit the configuration file 'config' and change the following:
+
+    For Fink:
    	 -> set LUAINC=-I/sw/include
 	 -> set INSTALL_TOP_SHARE=/sw/share/lua/5.1/
 	 -> set INSTALL_TOP_LIB=/sw/lib/lua/5.1/
+
+    For MacPorts:
+     -> set LUAINC=-I/opt/local/include
+     -> set INSTALL_TOP_SHARE=/opt/local/share/lua/5.1
+     -> set INSTALL_TOP_LIB=/opt/local/lib/lua/5.1
+
+    For both:
 	 -> comment "compiler and linker settings for linux"
 	 -> uncomment "compiler and linker settings for mac os x"
 	 -> change LD=export MACOSX_DEPLOYMENT_TARGET="10.3"; gcc
@@ -124,7 +150,7 @@ C. Some other have to be compiled and installed manually:
 	
  C2: LuaSec
 
-	Download and unpack it:
+	For Fink, download and unpack it:
 	 wget http://luaforge.net/frs/download.php/3920/luasec-0.3.tar.gz
 	 tar xfz luasec-0.3.tar.gz
 	 cd luasec-0.3/
@@ -137,6 +163,9 @@ C. Some other have to be compiled and installed manually:
 	
 	Build it and install:
 	 make macosx ; sudo make install
+	
+	For MacPorts, just install it:
+	 sudo port install lua-luasec
 
 D. (Optional) Install syntax highlighting for you favorite text editor
 
@@ -176,9 +205,16 @@ strictly higher version numbers, and contain the file Makefile.macosx
 	mv Makefile.macosx Makefile
 	
   Edit Makefile and set:
+
+   For Fink:
 	INCLUDE= -I/sw/include/ -I/sw/include/openssl
 	LIBS= -L/sw/lib -llua -lm
 	OPENSSL_LIBS= -L/sw/lib -lcrypto -lssl
+
+   For MacPorts:
+	INCLUDE= -I/opt/local/lib/openssl97/include/ -I/opt/local/include/
+	LIBS= -L/opt/local/lib -llua -lm
+	OPENSSL_LIBS= -L/opt/local/lib/openssl97/lib/ -lcrypto -lssl
 	
   Edit install.sh and set:
 	L_PATH="/Users/you/local/lualibs/lib/"
@@ -242,6 +278,9 @@ C. Install the support for mysql and DataBase abstraction in Ruby
 	ruby test.rb [hostname] [username] [dbpassword]
 	// e.g. : ruby test.rb localhost splay splay
 	sudo make install
+
+	or, with MacPorts:
+	 sudo port install rb-mysql
 	
  C2. Support for openssl in ruby
 	sudo gem install openssl-nonblock
@@ -253,12 +292,18 @@ C. Install the support for mysql and DataBase abstraction in Ruby
 	cd dbi-0.4.1/
 	sudo ruby setup.rb all
 	
+	or, with MacPorts:
+	 sudo port install rb-dbi +dbd_mysql
+	
  C4. Install DBI driver for MySQL
 	get dbd-mysql-0.4.2.tar.gz on
 	  http://rubyforge.org/frs/?group_id=234&release_id=28765
 	tar xvfz dbd-mysql-0.4.2.tar.gz
 	cd dbd-mysql-0.4.2/
 	sudo ruby setup.rb all
+	
+	or, with MacPorts:
+	 Nothing to do, it was installed in the C3 step.
 	
 D. Download and initialize the controller
 
