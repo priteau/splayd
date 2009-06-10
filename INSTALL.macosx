@@ -266,7 +266,7 @@ D. Download and initialize the controller
 	tar xvfz controller-xxx.tar.gz
 	cd controller-xxx
 	
-  Edit the database information: edit lib/config.rb and edit:
+  Edit the database information: edit lib/db_config.rb and edit:
 	class DBConfig
 		SQL_TYPE = "Mysql"
 		SQL_DB = "splay"
