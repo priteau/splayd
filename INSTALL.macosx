@@ -33,7 +33,7 @@ Many thanks to Etienne Riviere for this detailed manual :)
   are most probably found using DarwinPorts. If you have experience with 
   DarwinPorts and would like to contribute to this tutorial, please contact 
   the author.
-- this tutorial assumes that you do not change the per-default paths of Fink,
+- this tutorial assumes that you do not change the default paths of Fink,
   Ruby, and others.
 
 History:
